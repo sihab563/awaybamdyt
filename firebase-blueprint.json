@@ -1,0 +1,309 @@
+{
+  "entities": {
+    "UserAccount": {
+      "title": "UserAccount",
+      "description": "Private user account metadata for the authenticated Nexus member.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Firebase Auth UID of the account owner." },
+        "email": { "type": "string", "description": "Private email address from Google Sign-In." },
+        "displayName": { "type": "string", "description": "User display name." },
+        "gamerTag": { "type": "string", "description": "Unique Nexus handle." },
+        "avatarId": { "type": "string", "description": "Preset avatar identifier." },
+        "onlineStatus": { "type": "string", "enum": ["ONLINE", "IN_GAME", "AFK", "OFFLINE"] },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp on creation." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp on update." }
+      },
+      "required": ["userId", "displayName", "gamerTag", "avatarId", "onlineStatus", "createdAt", "updatedAt"]
+    },
+    "BlockedUser": {
+      "title": "BlockedUser",
+      "description": "Blocked user entry scoped under the blocker's private users subcollection.",
+      "type": "object",
+      "properties": {
+        "targetUid": { "type": "string", "description": "UID of the blocked user." },
+        "targetName": { "type": "string", "description": "Display name at time of block." },
+        "targetTag": { "type": "string", "description": "GamerTag at time of block." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp." }
+      },
+      "required": ["targetUid", "targetName", "targetTag", "createdAt"]
+    },
+    "NexusNotification": {
+      "title": "NexusNotification",
+      "description": "In-app notification delivered to a user's private notifications feed.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Recipient user UID." },
+        "senderId": { "type": "string", "description": "Sender UID." },
+        "senderName": { "type": "string", "description": "Sender display name." },
+        "type": { "type": "string", "enum": ["FRIEND_REQUEST", "FRIEND_ACCEPTED", "SERVER_INVITE", "ROLE_ASSIGNED", "MENTION", "MOD_ACTION"] },
+        "title": { "type": "string", "description": "Notification title." },
+        "body": { "type": "string", "description": "Notification body." },
+        "targetServerId": { "type": "string", "description": "Optional related server ID." },
+        "isRead": { "type": "boolean", "description": "Whether the recipient marked the alert read." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp." }
+      },
+      "required": ["userId", "senderId", "senderName", "type", "title", "body", "isRead", "createdAt"]
+    },
+    "GamerProfile": {
+      "title": "GamerProfile",
+      "description": "Public Nexus community profile with custom avatar, status, bio, and earned badges.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Firebase Auth UID." },
+        "displayName": { "type": "string", "description": "Display name." },
+        "gamerTag": { "type": "string", "description": "Nexus GamerTag." },
+        "bio": { "type": "string", "description": "Profile bio." },
+        "avatarId": { "type": "string", "description": "Preset avatar icon key." },
+        "customAvatarData": { "type": "string", "description": "Optional compressed Base64 JPEG avatar thumbnail." },
+        "bannerColorKey": { "type": "string", "description": "Profile banner gradient key." },
+        "onlineStatus": { "type": "string", "enum": ["ONLINE", "IN_GAME", "AFK", "OFFLINE"] },
+        "customStatusText": { "type": "string", "description": "Custom playing/activity message." },
+        "badges": { "type": "array", "description": "Bounded list of earned community badges." },
+        "visibility": { "type": "string", "enum": ["PUBLIC"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "displayName", "gamerTag", "avatarId", "onlineStatus", "badges", "visibility", "createdAt", "updatedAt"]
+    },
+    "NexusServer": {
+      "title": "NexusServer",
+      "description": "Discord-inspired gaming community server with roles, invite code, visibility, and bans.",
+      "type": "object",
+      "properties": {
+        "ownerId": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "iconEmoji": { "type": "string" },
+        "iconColorKey": { "type": "string" },
+        "iconData": { "type": "string" },
+        "visibility": { "type": "string", "enum": ["PUBLIC", "PRIVATE"] },
+        "inviteCode": { "type": "string" },
+        "memberUids": { "type": "array" },
+        "adminUids": { "type": "array" },
+        "modUids": { "type": "array" },
+        "bannedUids": { "type": "array" },
+        "memberCount": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["ownerId", "name", "description", "iconEmoji", "iconColorKey", "visibility", "inviteCode", "memberUids", "adminUids", "modUids", "bannedUids", "memberCount", "createdAt", "updatedAt"]
+    },
+    "ServerInvite": {
+      "title": "ServerInvite",
+      "description": "Direct invite code lookup mapping inviteCode to server metadata without exposing private server listings.",
+      "type": "object",
+      "properties": {
+        "inviteCode": { "type": "string" },
+        "serverId": { "type": "string" },
+        "serverName": { "type": "string" },
+        "serverDescription": { "type": "string" },
+        "iconEmoji": { "type": "string" },
+        "iconColorKey": { "type": "string" },
+        "visibility": { "type": "string", "enum": ["PUBLIC", "PRIVATE"] },
+        "ownerId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["inviteCode", "serverId", "serverName", "visibility", "ownerId", "createdAt", "updatedAt"]
+    },
+    "ServerMember": {
+      "title": "ServerMember",
+      "description": "Membership record with assigned server role and real-time online status.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "displayName": { "type": "string" },
+        "gamerTag": { "type": "string" },
+        "avatarId": { "type": "string" },
+        "customAvatarData": { "type": "string" },
+        "onlineStatus": { "type": "string", "enum": ["ONLINE", "IN_GAME", "AFK", "OFFLINE"] },
+        "role": { "type": "string", "enum": ["OWNER", "ADMIN", "MOD", "MEMBER"] },
+        "badges": { "type": "array" },
+        "joinedAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "displayName", "gamerTag", "avatarId", "onlineStatus", "role", "badges", "joinedAt", "updatedAt"]
+    },
+    "ServerChannel": {
+      "title": "ServerChannel",
+      "description": "Text, Voice, or Announcement channel organized inside a server category.",
+      "type": "object",
+      "properties": {
+        "serverId": { "type": "string" },
+        "name": { "type": "string" },
+        "topic": { "type": "string" },
+        "type": { "type": "string", "enum": ["TEXT", "VOICE", "ANNOUNCEMENT"] },
+        "categoryName": { "type": "string" },
+        "position": { "type": "integer" },
+        "adminOnlyPost": { "type": "boolean" },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["serverId", "name", "type", "categoryName", "position", "adminOnlyPost", "createdBy", "createdAt", "updatedAt"]
+    },
+    "ChannelMessage": {
+      "title": "ChannelMessage",
+      "description": "Real-time channel chat message supporting replies, emoji reactions, edits, and image/file/voice attachments.",
+      "type": "object",
+      "properties": {
+        "serverId": { "type": "string" },
+        "channelId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "senderTag": { "type": "string" },
+        "senderAvatarId": { "type": "string" },
+        "senderRole": { "type": "string" },
+        "text": { "type": "string" },
+        "replyToId": { "type": "string" },
+        "replyToAuthor": { "type": "string" },
+        "replyToSnippet": { "type": "string" },
+        "attachmentType": { "type": "string", "enum": ["NONE", "IMAGE", "FILE", "VOICE"] },
+        "attachmentName": { "type": "string" },
+        "attachmentMime": { "type": "string" },
+        "attachmentData": { "type": "string" },
+        "audioDurationSec": { "type": "integer" },
+        "reactions": { "type": "object" },
+        "isEdited": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["serverId", "channelId", "senderId", "senderName", "senderTag", "senderAvatarId", "text", "attachmentType", "reactions", "isEdited", "createdAt", "updatedAt"]
+    },
+    "VoiceMember": {
+      "title": "VoiceMember",
+      "description": "Active participant presence inside a real-time server voice channel.",
+      "type": "object",
+      "properties": {
+        "serverId": { "type": "string" },
+        "channelId": { "type": "string" },
+        "userId": { "type": "string" },
+        "displayName": { "type": "string" },
+        "gamerTag": { "type": "string" },
+        "avatarId": { "type": "string" },
+        "isMuted": { "type": "boolean" },
+        "isDeafened": { "type": "boolean" },
+        "isSpeaking": { "type": "boolean" },
+        "joinedAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["serverId", "channelId", "userId", "displayName", "gamerTag", "avatarId", "isMuted", "isDeafened", "isSpeaking", "joinedAt", "updatedAt"]
+    },
+    "Friendship": {
+      "title": "Friendship",
+      "description": "Friend request or accepted friendship between two Nexus users.",
+      "type": "object",
+      "properties": {
+        "userIds": { "type": "array" },
+        "requesterId": { "type": "string" },
+        "requesterName": { "type": "string" },
+        "requesterTag": { "type": "string" },
+        "requesterAvatarId": { "type": "string" },
+        "recipientId": { "type": "string" },
+        "recipientName": { "type": "string" },
+        "recipientTag": { "type": "string" },
+        "recipientAvatarId": { "type": "string" },
+        "status": { "type": "string", "enum": ["PENDING", "ACCEPTED", "DECLINED"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userIds", "requesterId", "recipientId", "status", "createdAt", "updatedAt"]
+    },
+    "DirectMessageThread": {
+      "title": "DirectMessageThread",
+      "description": "1-on-1 direct message thread between two Nexus users.",
+      "type": "object",
+      "properties": {
+        "participantIds": { "type": "array" },
+        "participantNames": { "type": "object" },
+        "participantTags": { "type": "object" },
+        "lastMessage": { "type": "string" },
+        "lastSenderId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["participantIds", "lastMessage", "lastSenderId", "createdAt", "updatedAt"]
+    },
+    "DirectMessage": {
+      "title": "DirectMessage",
+      "description": "Real-time message inside a 1-on-1 DM thread supporting replies, reactions, edits, and attachments.",
+      "type": "object",
+      "properties": {
+        "threadId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "senderTag": { "type": "string" },
+        "senderAvatarId": { "type": "string" },
+        "text": { "type": "string" },
+        "replyToId": { "type": "string" },
+        "replyToAuthor": { "type": "string" },
+        "replyToSnippet": { "type": "string" },
+        "attachmentType": { "type": "string", "enum": ["NONE", "IMAGE", "FILE", "VOICE"] },
+        "attachmentName": { "type": "string" },
+        "attachmentMime": { "type": "string" },
+        "attachmentData": { "type": "string" },
+        "audioDurationSec": { "type": "integer" },
+        "reactions": { "type": "object" },
+        "isEdited": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["threadId", "senderId", "senderName", "text", "attachmentType", "reactions", "isEdited", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserAccount" },
+      "description": "Private user account records isolated to the owning UID."
+    },
+    "/users/{userId}/blocked_users/{targetUid}": {
+      "schema": { "$ref": "#/entities/BlockedUser" },
+      "description": "Private blocklist maintained by each user."
+    },
+    "/users/{userId}/notifications/{notifId}": {
+      "schema": { "$ref": "#/entities/NexusNotification" },
+      "description": "Private notifications inbox for a user."
+    },
+    "/gamer_profiles/{userId}": {
+      "schema": { "$ref": "#/entities/GamerProfile" },
+      "description": "Public Nexus user profile documents."
+    },
+    "/nexus_servers/{serverId}": {
+      "schema": { "$ref": "#/entities/NexusServer" },
+      "description": "Discord-inspired gaming community server documents."
+    },
+    "/server_invites/{inviteCode}": {
+      "schema": { "$ref": "#/entities/ServerInvite" },
+      "description": "Direct invite code lookup documents."
+    },
+    "/nexus_servers/{serverId}/members/{memberUid}": {
+      "schema": { "$ref": "#/entities/ServerMember" },
+      "description": "Server member roster with assigned roles and live status."
+    },
+    "/nexus_servers/{serverId}/channels/{channelId}": {
+      "schema": { "$ref": "#/entities/ServerChannel" },
+      "description": "Server channels (text, voice, announcement) organized by category."
+    },
+    "/nexus_servers/{serverId}/channels/{channelId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/ChannelMessage" },
+      "description": "Real-time channel chat messages and voice clip transmissions."
+    },
+    "/nexus_servers/{serverId}/channels/{channelId}/voice_members/{memberUid}": {
+      "schema": { "$ref": "#/entities/VoiceMember" },
+      "description": "Real-time voice channel room participants."
+    },
+    "/friendships/{friendshipId}": {
+      "schema": { "$ref": "#/entities/Friendship" },
+      "description": "Canonical sorted-UID friend request and friend connection documents."
+    },
+    "/dm_threads/{threadId}": {
+      "schema": { "$ref": "#/entities/DirectMessageThread" },
+      "description": "Canonical 1-on-1 direct message thread metadata."
+    },
+    "/dm_threads/{threadId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/DirectMessage" },
+      "description": "Real-time 1-on-1 direct messages."
+    }
+  }
+}

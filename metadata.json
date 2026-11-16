@@ -1,0 +1,6 @@
+{
+  "name": "Nexus",
+  "description": "Discord-inspired gaming community platform with real-time text and voice channels, servers, roles, direct messages, friend system, moderation, and custom profiles.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,50 @@
+# Android & Gradle build outputs
+*.iml
+.gradle/
+.kotlin/
+/build/
+app/build/
+/captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+*.hprof
+
+# IDE files
+/.idea/
+!/.idea/codeStyles/
+*.swp
+*.swo
+.DS_Store
+
+# Local configuration & secrets (never commit real credentials)
+/local.properties
+local.properties
+.env
+.env.local
+.env.*.local
+!.env.example
+*.jks
+*.keystore
+debug.keystore
+debug.keystore.base64
+google-services.json.bak
+service-account*.json
+
+# Firebase emulator & debug logs
+*-debug.log
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+.firebase/
+
+# Node modules (for Firestore security rules tests)
+node_modules/
+npm-debug.log*
+
+# Build output staging
+.build-outputs/

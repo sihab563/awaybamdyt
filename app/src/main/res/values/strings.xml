@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Nexus</string>
+    <string name="cd_hero_banner">Nexus command center neon banner</string>
+    <string name="auth_badge">NEXUS</string>
+    <string name="auth_subtitle">Where gaming squads organize, talk, and play in real time</string>
+    <string name="sign_in_with_google">Continue with Google</string>
+    <string name="register_with_google">Create Nexus Account with Google</string>
+    <string name="auth_tab_login">Sign In</string>
+    <string name="auth_tab_register">Create Account</string>
+    <string name="auth_login_heading">Welcome back to Nexus</string>
+    <string name="auth_login_desc">Sign in with Google to jump into your servers, voice lounges, and squad direct messages.</string>
+    <string name="auth_register_heading">Claim your Nexus identity</string>
+    <string name="auth_register_desc">Pick a GamerTag, custom avatar, and online status — synced in real time across devices.</string>
+    <string name="auth_firebase_note">Secured with Firebase Auth &amp; Google Sign-In • Real-time Firestore sync</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_discover">Discover</string>
+    <string name="nav_alerts">Alerts</string>
+    <string name="nav_you">You</string>
+</resources>
